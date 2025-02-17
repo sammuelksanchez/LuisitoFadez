@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
@@ -11,12 +12,18 @@ import lombok.Data;
 @DynamoDbBean
 @NoArgsConstructor
 @AllArgsConstructor
+
 @Data
 public class Appointments {
+    @Setter
     private String appt_id;
+    @Setter
     private String phone_number;
+    @Setter
     private String appointment_datetime;
-    private String create_at;
+    @Setter
+    private String created_at;
+    @Setter
     private String status;
 
     @DynamoDbPartitionKey
@@ -31,7 +38,7 @@ public class Appointments {
     public String getAppointmentDateTime(){return appointment_datetime;}
 
     @DynamoDbAttribute("created_at")
-    public String getCreationTime(){return create_at;}
+    public String getCreationTime(){return created_at;}
 
     @DynamoDbAttribute("status")
     public String getStatus(){return status;}
