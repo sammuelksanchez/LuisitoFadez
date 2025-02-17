@@ -13,7 +13,7 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class Appointments {
-    private long appt_bid;
+    private String appt_id;
     private String phone_number;
     private String appointment_datetime;
     private String create_at;
@@ -21,7 +21,7 @@ public class Appointments {
 
     @DynamoDbPartitionKey
     @DynamoDbAttribute("appt_id")
-    public long getAppointmentId(){return appt_id;}
+    public String getAppointmentId(){return appt_id;}
 
     @DynamoDbSortKey
     @DynamoDbAttribute("phone_number")
