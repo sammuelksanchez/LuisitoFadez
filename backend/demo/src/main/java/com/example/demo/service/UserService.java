@@ -1,11 +1,17 @@
 package com.example.demo.service;
 
 
+import com.example.demo.login.verification;
 import com.example.demo.model.User;
 import com.example.demo.repo.UserRepository;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 import org.springframework.stereotype.Service;
+import com.example.demo.login.verification;
 
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class UserService {
@@ -15,12 +21,21 @@ public class UserService {
         }
 
 //      create a new user
-        public User createUser(User user){
-            if(userRepository.existsByPhoneNumber(user.getPhoneNumber())){
-                throw new RuntimeException("User already exists with this phone number: "+ user.getPhoneNumber());
-            }
-            return userRepository.save(user);
-        }
+public User createUser(User user, String verificationCode) throws ExecutionException, InterruptedException, FirebaseAuthException {
+    if (userRepository.existsByPhoneNumber(user.getPhoneNumber())) {
+        throw new RuntimeException("User already exists with this phone number: " + user.getPhoneNumber());
+    }
+
+    // Verify the phone number using Firebase
+    FirebaseToken token = verification.verifyPhoneNumber(verificationCode);
+
+    if (token == null) {
+        throw new RuntimeException("Phone number verification failed.");
+    }
+
+    // If verification is successful, save the user to the database
+    return userRepository.save(user);
+}
 
         public Optional<User> getUserByPhoneNumber(String phoneNumber){
             return userRepository.findByPhoneNumber(phoneNumber);
@@ -46,4 +61,5 @@ public class UserService {
             }
             userRepository.deleteByPhoneNumber(phoneNumber);
         }
+
 }

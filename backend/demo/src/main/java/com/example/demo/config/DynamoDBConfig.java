@@ -25,7 +25,7 @@ public class DynamoDBConfig {
     public DynamoDbClient dynamoDbClient() {
 
         return DynamoDbClient.builder()
-                .region(Region.US_EAST_1) // Change region as needed
+                .region(Region.US_EAST_2) // Change region as needed
                 .credentialsProvider(StaticCredentialsProvider.create(
                         AwsBasicCredentials.create(accessKey, secretKey)
                 ))

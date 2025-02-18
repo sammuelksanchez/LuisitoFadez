@@ -37,3 +37,7 @@ yarn-error.*
 
 app-example
 backend/demo/src/main/resources/.env
+backend/demo/src/main/resources/env
+backend/demo/src/main/resources/firebase-service-account.json
+backend/demo/src/main/resources/firebase-service-account.json
+backend/demo/src/main/resources/firebase-service-account.json
