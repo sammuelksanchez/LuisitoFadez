@@ -2,6 +2,7 @@ package com.example.demo.repo;
 
 import com.example.demo.model.Appointments;
 import com.example.demo.model.User;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 @Repository
+@Component
 public class UserRepository {
     private final DynamoDbTable<User> userTable;
 
@@ -32,7 +34,14 @@ public class UserRepository {
         return Optional.ofNullable(userTable.getItem(key));
     }
 
+    public boolean existsByPhoneNumber(String phoneNumber){
+        return findByPhoneNumber(phoneNumber).isPresent();
+    }
+
     public void deleteByPhoneNumber(String phoneNumber){
+        if(!existsByPhoneNumber(phoneNumber)){
+            throw new RuntimeException("User not found: " + phoneNumber);
+        }
         Key key = Key.builder()
                 .partitionValue(phoneNumber)
                 .build();

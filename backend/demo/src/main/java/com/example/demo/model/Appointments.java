@@ -9,36 +9,51 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbParti
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSortKey;
 import lombok.Data;
 
+
 @DynamoDbBean
 @NoArgsConstructor
 @AllArgsConstructor
-
-@Data
 public class Appointments {
-    @Setter
-    private String appt_id;
-    @Setter
-    private String phone_number;
-    @Setter
-    private String appointment_datetime;
-    @Setter
-    private String created_at;
-    @Setter
+
+    private String appointmentId;
+    private String phoneNumber;
+    private String appointmentDatetime;
+    private String createdAt;
     private String status;
 
-    @DynamoDbPartitionKey
-    @DynamoDbAttribute("appt_id")
-    public String getAppointmentId(){return appt_id;}
 
+    public void setAppointmentId(String appointmentId){
+        this.appointmentId = appointmentId;
+    }
+
+    public void setPhoneNumber(String phoneNumber){
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setAppointmentDatetime(String appointmentDatetime){
+        this.appointmentDatetime = appointmentDatetime;
+    }
+
+    public void setCreatedAt(String createdAt){
+        this.createdAt = createdAt;
+    }
+
+    public void setStatus(String status){
+        this.status = status;
+    }
     @DynamoDbSortKey
-    @DynamoDbAttribute("phone_number")
-    public String getPhoneNumber(){return phone_number;}
+    @DynamoDbAttribute("appointmentId")
+    public String getAppointmentId(){return appointmentId;}
 
-    @DynamoDbAttribute("appointment_datetime")
-    public String getAppointmentDateTime(){return appointment_datetime;}
+    @DynamoDbPartitionKey
+    @DynamoDbAttribute("phoneNumber")
+    public String getPhoneNumber(){return phoneNumber;}
 
-    @DynamoDbAttribute("created_at")
-    public String getCreationTime(){return created_at;}
+    @DynamoDbAttribute("appointmentDateTime")
+    public String getAppointmentDateTime(){return appointmentDatetime;}
+
+    @DynamoDbAttribute("createdAt")
+    public String getCreatedAt(){return createdAt;}
 
     @DynamoDbAttribute("status")
     public String getStatus(){return status;}

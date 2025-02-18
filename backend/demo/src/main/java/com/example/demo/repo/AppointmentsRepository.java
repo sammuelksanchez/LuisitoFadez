@@ -26,9 +26,10 @@ public class AppointmentsRepository {
         return appointments;
     }
 
-    public Optional<Appointments> findById(String appointmentId){
+    public Optional<Appointments> findById(String phoneNumber,String appointmentId){
         Key key = Key.builder()
-                .partitionValue(appointmentId)
+                .partitionValue(phoneNumber)
+                .sortValue(appointmentId)
                 .build();
         return Optional.ofNullable(appointmentTable.getItem(key));
     }
@@ -44,9 +45,17 @@ public class AppointmentsRepository {
                 .collect(Collectors.toList());
     }
 
-    public void deleteById(String appointmentId){
+    public boolean existsById(String phoneNumber,String appointmentId){
+        return findById(phoneNumber, appointmentId).isPresent();
+    }
+
+    public void deleteById(String phoneNumber ,String appointmentId){
+        if(!existsById(phoneNumber,appointmentId)){
+            throw new RuntimeException("Appointment Not Found: " + appointmentId);
+        }
         Key key = Key.builder()
-                .partitionValue(appointmentId)
+                .partitionValue(phoneNumber)
+                .sortValue(appointmentId)
                 .build();
         appointmentTable.deleteItem(key);
     }
