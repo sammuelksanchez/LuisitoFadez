@@ -13,6 +13,11 @@ import lombok.Data;
 @DynamoDbBean
 @NoArgsConstructor
 @AllArgsConstructor
+
+/*
+ * this is where we add the rows of the database
+ */
+
 public class Appointments {
 
     private String appointmentId;

@@ -25,7 +25,7 @@ public class AppointmentController {
         return ResponseEntity.ok(appointmentsService.createAppointment(appointment));
     }
 
-    @GetMapping("/{phoneNumber}/{appointmentId}")
+    @GetMapping("/{phoneNumber}/{appointmentId}")                                 // there might be a typo here on appointMentID
     public ResponseEntity<Appointments> getAppointmentById(@PathVariable String phoneNumber, @PathVariable String appointMentId){
         return appointmentsService.findById(phoneNumber,appointMentId)
                 .map(ResponseEntity::ok)
